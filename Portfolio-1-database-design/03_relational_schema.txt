@@ -1,0 +1,142 @@
+==========================================================================================
+3. RELATIONAL SCHEMA
+==========================================================================================
+
+Evidence for Portfolio 1: Database Design and Modelling, Hospital Management System (Miva
+Hospital), PostgreSQL.
+
+Implemented by schema/01_create_tables.sql.
+
+This shows how the entities are represented as tables and how they connect through primary
+and foreign keys.
+
+  * PATIENTS (patient_id PK, first_name, last_name, date_of_birth, gender, phone, email
+    UNIQUE)
+  * DOCTORS (doctor_id PK, doctor_name, specialization, phone, email UNIQUE)
+  * APPOINTMENTS (appointment_id PK, patient_id FK, doctor_id FK, appointment_date,
+    reason, diagnosis, status)
+  * PRESCRIPTIONS (prescription_id PK, patient_id FK, doctor_id FK, appointment_id FK,
+    medication, dosage, frequency, duration, prescription_date)
+  * LABORATORY_RECORDS (lab_id PK, patient_id FK, doctor_id FK, appointment_id FK,
+    test_name, test_result, result_status, test_date)
+
+TABLES AND ATTRIBUTES
+---------------------
+
+Patients
+~~~~~~~~
+
+Stores personal and contact information for registered patients.
+
++---------------+--------------+-----+----------------------------------------+
+| Attribute     | Data type    | Key | Constraint                             |
++===============+==============+=====+========================================+
+| patient_id    | INT          | PK  | GENERATED ALWAYS AS IDENTITY, NOT NULL |
++---------------+--------------+-----+----------------------------------------+
+| first_name    | VARCHAR(60)  |     | NOT NULL                               |
++---------------+--------------+-----+----------------------------------------+
+| last_name     | VARCHAR(60)  |     | NOT NULL                               |
++---------------+--------------+-----+----------------------------------------+
+| date_of_birth | DATE         |     | NULL                                   |
++---------------+--------------+-----+----------------------------------------+
+| gender        | VARCHAR(20)  |     | NULL                                   |
++---------------+--------------+-----+----------------------------------------+
+| phone         | VARCHAR(25)  |     | NULL                                   |
++---------------+--------------+-----+----------------------------------------+
+| email         | VARCHAR(120) | UK  | UNIQUE, NULL                           |
++---------------+--------------+-----+----------------------------------------+
+
+Doctors
+~~~~~~~
+
+Stores doctors' names, specialisations and contact details.
+
++----------------+--------------+-----+----------------------------------------+
+| Attribute      | Data type    | Key | Constraint                             |
++================+==============+=====+========================================+
+| doctor_id      | INT          | PK  | GENERATED ALWAYS AS IDENTITY, NOT NULL |
++----------------+--------------+-----+----------------------------------------+
+| doctor_name    | VARCHAR(120) |     | NOT NULL                               |
++----------------+--------------+-----+----------------------------------------+
+| specialization | VARCHAR(100) |     | NULL                                   |
++----------------+--------------+-----+----------------------------------------+
+| phone          | VARCHAR(25)  |     | NULL                                   |
++----------------+--------------+-----+----------------------------------------+
+| email          | VARCHAR(120) | UK  | UNIQUE, NULL                           |
++----------------+--------------+-----+----------------------------------------+
+
+Appointments
+~~~~~~~~~~~~
+
+Records appointments between patients and doctors.
+
++------------------+--------------+-----+------------------------------------------------+
+| Attribute        | Data type    | Key | Constraint                                     |
++==================+==============+=====+================================================+
+| appointment_id   | INT          | PK  | GENERATED ALWAYS AS IDENTITY, NOT NULL         |
++------------------+--------------+-----+------------------------------------------------+
+| patient_id       | INT          | FK  | NOT NULL                                       |
++------------------+--------------+-----+------------------------------------------------+
+| doctor_id        | INT          | FK  | NOT NULL                                       |
++------------------+--------------+-----+------------------------------------------------+
+| appointment_date | TIMESTAMP(0) |     | NOT NULL                                       |
++------------------+--------------+-----+------------------------------------------------+
+| reason           | VARCHAR(255) |     | NULL                                           |
++------------------+--------------+-----+------------------------------------------------+
+| diagnosis        | TEXT         |     | NULL                                           |
++------------------+--------------+-----+------------------------------------------------+
+| status           | VARCHAR(20)  |     | NOT NULL, DEFAULT 'Scheduled', CHECK           |
+|                  |              |     | constraint                                     |
++------------------+--------------+-----+------------------------------------------------+
+
+Prescriptions
+~~~~~~~~~~~~~
+
+Stores prescription details and identifies the patient and the prescribing doctor.
+
++-------------------+--------------+-----+----------------------------------------+
+| Attribute         | Data type    | Key | Constraint                             |
++===================+==============+=====+========================================+
+| prescription_id   | INT          | PK  | GENERATED ALWAYS AS IDENTITY, NOT NULL |
++-------------------+--------------+-----+----------------------------------------+
+| patient_id        | INT          | FK  | NOT NULL                               |
++-------------------+--------------+-----+----------------------------------------+
+| doctor_id         | INT          | FK  | NOT NULL                               |
++-------------------+--------------+-----+----------------------------------------+
+| appointment_id    | INT          | FK  | NULL                                   |
++-------------------+--------------+-----+----------------------------------------+
+| medication        | VARCHAR(150) |     | NOT NULL                               |
++-------------------+--------------+-----+----------------------------------------+
+| dosage            | VARCHAR(100) |     | NULL                                   |
++-------------------+--------------+-----+----------------------------------------+
+| frequency         | VARCHAR(100) |     | NULL                                   |
++-------------------+--------------+-----+----------------------------------------+
+| duration          | VARCHAR(60)  |     | NULL                                   |
++-------------------+--------------+-----+----------------------------------------+
+| prescription_date | TIMESTAMP(0) |     | NOT NULL, DEFAULT CURRENT_TIMESTAMP    |
++-------------------+--------------+-----+----------------------------------------+
+
+Laboratory_Records
+~~~~~~~~~~~~~~~~~~
+
+Maintains laboratory test information, results and status.
+
++----------------+--------------+-----+----------------------------------------+
+| Attribute      | Data type    | Key | Constraint                             |
++================+==============+=====+========================================+
+| lab_id         | INT          | PK  | GENERATED ALWAYS AS IDENTITY, NOT NULL |
++----------------+--------------+-----+----------------------------------------+
+| patient_id     | INT          | FK  | NOT NULL                               |
++----------------+--------------+-----+----------------------------------------+
+| doctor_id      | INT          | FK  | NULL                                   |
++----------------+--------------+-----+----------------------------------------+
+| appointment_id | INT          | FK  | NULL                                   |
++----------------+--------------+-----+----------------------------------------+
+| test_name      | VARCHAR(150) |     | NOT NULL                               |
++----------------+--------------+-----+----------------------------------------+
+| test_result    | TEXT         |     | NULL                                   |
++----------------+--------------+-----+----------------------------------------+
+| result_status  | VARCHAR(30)  |     | NOT NULL, DEFAULT 'Pending'            |
++----------------+--------------+-----+----------------------------------------+
+| test_date      | TIMESTAMP(0) |     | NOT NULL, DEFAULT CURRENT_TIMESTAMP    |
++----------------+--------------+-----+----------------------------------------+

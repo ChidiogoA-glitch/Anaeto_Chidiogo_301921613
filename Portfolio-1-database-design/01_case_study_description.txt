@@ -1,0 +1,48 @@
+==========================================================================================
+1. CHOSEN CASE STUDY DESCRIPTION
+==========================================================================================
+
+Evidence for Portfolio 1: Database Design and Modelling, Hospital Management System (Miva
+Hospital), PostgreSQL.
+
+Case study: Hospital Management System (HMS) for Miva Hospital
+DBMS: PostgreSQL
+
+DESCRIPTION
+-----------
+
+The Hospital Management System is a relational database for Miva Hospital. It manages
+essential hospital operations, including patient registration, doctor information,
+appointments, prescriptions and laboratory records. It provides a structured way to store,
+retrieve and maintain hospital information while reducing data duplication and maintaining
+data integrity.
+
+The database has five main entities:
+
++-----------------+---------------------------------------------------------------------+
+| Entity          | Description                                                         |
++=================+=====================================================================+
+| Patients        | Stores patient personal information, including names, date of       |
+|                 | birth, gender and contact details.                                  |
++-----------------+---------------------------------------------------------------------+
+| Doctors         | Stores doctors' names, specialisations and contact information.     |
++-----------------+---------------------------------------------------------------------+
+| Appointments    | Records appointments between patients and doctors, including dates, |
+|                 | reasons, diagnoses and status.                                      |
++-----------------+---------------------------------------------------------------------+
+| Prescriptions   | Stores medications prescribed to patients, including dosage,        |
+|                 | frequency, duration and the prescribing doctor.                     |
++-----------------+---------------------------------------------------------------------+
+| Laboratory      | Stores laboratory tests requested for patients, including test      |
+| Records         | names, results, dates and result status.                            |
++-----------------+---------------------------------------------------------------------+
+
+OBJECTIVES AND REQUIREMENTS OF THE DATABASE
+-------------------------------------------
+
+  * Maintain accurate and consistent patient and doctor records.
+  * Record appointments between patients and doctors.
+  * Track prescriptions and identify the doctor responsible for prescribing medication.
+  * Maintain laboratory test records and results.
+  * Establish relationships between the entities.
+  * Enforce data integrity through keys and constraints.
